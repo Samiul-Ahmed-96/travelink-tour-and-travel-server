@@ -19,7 +19,12 @@ async function run() {
         const database = client.db("travelink");
         const pakagesCollection = database.collection("travel-pakage");
 
-        
+        //Get Api
+        app.get('/tourPakages',async(req,res)=>{
+            const cursor = await pakagesCollection.find({});
+            const allPakages = await cursor.toArray();
+            res.send(allPakages);
+        })
 
     }
     finally {
