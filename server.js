@@ -19,6 +19,7 @@ async function run() {
         console.log('db connected')
         const database = client.db("travelink");
         const pakagesCollection = database.collection("travel-pakage");
+        const ordersCollection =database.collection("orders");
 
         //Get Api
         app.get('/tourPakages',async(req,res)=>{
@@ -32,6 +33,12 @@ async function run() {
             const query = {_id : ObjectId(id)};
             const singlePakage = await pakagesCollection.findOne(query);
             res.json(singlePakage);
+        })
+        //Add orders Api
+        app.post('/orders',async(req,res)=>{
+            const order = req.body;
+            const result = await ordersCollection.insertOne(order);
+            res.json(result);
         })
     }
     finally {
