@@ -40,6 +40,19 @@ async function run() {
             const result = await ordersCollection.insertOne(order);
             res.json(result);
         })
+        //Get Orders Api
+        app.get('/orders',async(req,res)=>{
+            const cursor = await ordersCollection.find({});
+            const allOrders = await cursor.toArray();
+            res.send(allOrders);
+        })
+        //Delete single item from orders Api
+        app.delete('/orders/:id', async (req,res)=>{
+            const id = req.params.id;
+            const query = {_id : ObjectId(id)};
+            const result = await ordersCollection.deleteOne(query);
+            res.json(result)
+        })
     }
     finally {
         // await client.close();
