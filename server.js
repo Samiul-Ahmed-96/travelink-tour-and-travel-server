@@ -21,13 +21,13 @@ async function run() {
         const pakagesCollection = database.collection("travel-pakage");
         const ordersCollection =database.collection("orders");
 
-        //Get Api
+        //Get All Pakages
         app.get('/tourPakages',async(req,res)=>{
             const cursor = await pakagesCollection.find({});
             const allPakages = await cursor.toArray();
             res.send(allPakages);
         })
-        //Get Single Service
+        //Get Single Pakage
         app.get('/tourPakages/:id',async(req,res)=>{
             const id = req.params.id;
             const query = {_id : ObjectId(id)};
