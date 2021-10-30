@@ -53,6 +53,14 @@ async function run() {
             const result = await ordersCollection.deleteOne(query);
             res.json(result)
         })
+        //Add Pakage Api
+        app.post('/tourPakages',async(req,res)=>{
+            console.log('hiiting the pakage')
+            const newPakage = req.body;
+            console.log(newPakage);
+            const pakage = await pakagesCollection.insertOne(newPakage);
+            res.json(pakage);
+        })
     }
     finally {
         // await client.close();
