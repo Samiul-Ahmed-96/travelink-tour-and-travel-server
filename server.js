@@ -20,6 +20,7 @@ async function run() {
         const database = client.db("travelink");
         const pakagesCollection = database.collection("travel-pakage");
         const ordersCollection =database.collection("orders");
+        const usersCollection =database.collection("users");
 
         //Get All Pakages
         app.get('/tourPakages',async(req,res)=>{
@@ -60,6 +61,23 @@ async function run() {
             console.log(newPakage);
             const pakage = await pakagesCollection.insertOne(newPakage);
             res.json(pakage);
+        })
+        //Added user to Db 
+        app.post('/users', async (req,res)=>{
+            const user = req.body;
+            console.log(user)
+            const result = await usersCollection.insertOne(user)
+            res.json(result)
+        })
+         //Added user to db using upsert
+         app.put('/users', async(req,res)=>{
+            const user = req.body;
+            console.log(user)
+            const filter = {email: user.email};
+            const options = { upsert : true};
+            const update = {$set : user}
+            const result =await usersCollection.updateOne(filter,update,options);
+            res.json(result)
         })
     }
     finally {
